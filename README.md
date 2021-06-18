@@ -1,7 +1,8 @@
 # Short URL
-## _API Сервис по сокращению ссылок_
-[ссылка]()
-## Условия задания:
+_API Сервис по сокращению ссылок_
+[Link]()
+
+### Условия задания:
 - Каждая ссылка уникальна(на один ориг. URL ссылается одна сокращенная ссылка)
 - Длинна ссылки 10 символов
 - Разрешенные символы[A-Za-z0-9_]
@@ -11,14 +12,14 @@
 - Create(принимает ориг. URL, сохраняет в базе и возвращает сокращенный)
 - Get(принимает сокращенный URL и возвращает ориг.)
 
-## Tech
+### Tech
 - Golang
 - PostgreSQL
 - Docker
 - gRPC
 - protobuf
 
-## Installation
+### Installation
 
 Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
 
@@ -30,7 +31,7 @@ cd ShortURL
 docker-compose run
 ```
 
-## License
+### License
 
 MIT
 
