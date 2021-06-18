@@ -1,0 +1,16 @@
+syntax="proto3";
+
+package main;
+
+service Shortlink {
+    rpc Create(OriginURL) returns (ShortURL) {}
+    rpc Get(ShortURL) returns (OriginURL) {}
+}
+
+message OriginURL {
+    string url = 1;
+}
+
+message ShortURL {
+    string url = 1;
+}
