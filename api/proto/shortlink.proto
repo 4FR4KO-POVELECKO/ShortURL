@@ -2,17 +2,17 @@ syntax="proto3";
 
 package main;
 
-option go_package = "github.com/4FR4KO-POVELECKO/ShortURL";
+option go_package = "/api";
 
 service Shortlink {
-    rpc Create(OriginURL) returns (ShortURL) {}
-    rpc Get(ShortURL) returns (OriginURL) {}
+    rpc Create(OriginUrl) returns (ShortUrl) {}
+    rpc Get(ShortUrl) returns (OriginUrl) {}
 }
 
-message OriginURL {
+message OriginUrl {
     string url = 1;
 }
 
-message ShortURL {
+message ShortUrl {
     string url = 1;
 }

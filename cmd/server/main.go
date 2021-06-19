@@ -1,14 +1,18 @@
 package main
 
 import (
+	"ShortURL/pkg/api"
+	"ShortURL/pkg/shorturl"
 	"log"
 	"net"
+
+	"google.golang.org/grpc"
 )
 
 func main() {
 	s := grpc.NewServer()
-	srv := &shortlink.GRPCServer{}
-	api.RegisterAdderServer(s, srv)
+	srv := &shorturl.GRPCServer{}
+	api.RegisterShortlinkServer(s, srv)
 
 	l, err := net.Listen("tcp", ":8000")
 	if err != nil {
