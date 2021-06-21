@@ -3,6 +3,7 @@ package grpcserver
 import (
 	"context"
 
+	shorten "ShortURL/internal/app/utils"
 	"ShortURL/pkg/api"
 )
 
@@ -10,7 +11,9 @@ import (
 type GRPCServer struct{}
 
 func (s *GRPCServer) Create(ctx context.Context, req *api.OriginUrl) (*api.ShortUrl, error) {
-	return &api.ShortUrl{Url: "short"}, nil
+	short := shorten.Shorten()
+
+	return &api.ShortUrl{Url: short}, nil
 }
 
 func (s *GRPCServer) Get(context.Context, *api.ShortUrl) (*api.OriginUrl, error) {
