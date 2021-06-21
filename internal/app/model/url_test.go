@@ -17,7 +17,7 @@ func TestURL_Validate(t *testing.T) {
 			name: "valid",
 			payload: &model.URL{
 				OriginURL: "google.com",
-				ShortURL:  "XYZabc123_",
+				ShortURL:  "JL_Cfwf951",
 			},
 			err: false,
 		},
@@ -41,7 +41,7 @@ func TestURL_Validate(t *testing.T) {
 			name: "short url < 10",
 			payload: &model.URL{
 				OriginURL: "google.com",
-				ShortURL:  "XYZabc123",
+				ShortURL:  "JLCfwf_95",
 			},
 			err: true,
 		},
@@ -90,14 +90,10 @@ func TestURL_Validate(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			err := tc.payload.Validate()
-			var eq bool
+			eq := false
 
 			if err != nil {
 				eq = assert.Error(t, err)
-			}
-
-			if err == nil {
-				eq = false
 			}
 
 			assert.Equal(t, tc.err, eq)

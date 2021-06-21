@@ -1,6 +1,6 @@
 package store
 
 type Store interface {
-	Set(key string)
+	Set(key string) string
 	Get(key string) string
 }

@@ -20,7 +20,10 @@ func (u *URL) Validate() error {
 			&u.ShortURL,
 			validation.Required,
 			validation.Length(10, 10),
-			validation.Match(regexp.MustCompile(`[A-Z]{3}[a-z]{3}[0-9]{3}[_]{1}`)),
+			validation.Match(regexp.MustCompile("[A-Z]{1,3}")),
+			validation.Match(regexp.MustCompile("[a-z]{1,3}")),
+			validation.Match(regexp.MustCompile("[0-9]{1,3}")),
+			validation.Match(regexp.MustCompile("_")),
 		),
 	)
 }
