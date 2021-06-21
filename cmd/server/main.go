@@ -1,8 +1,10 @@
 package main
 
 import (
+	"ShortURL/internal/app/shorten"
 	"ShortURL/pkg/api"
-	"ShortURL/pkg/shorturl"
+	"ShortURL/pkg/grpcserver"
+	"fmt"
 	"log"
 	"net"
 
@@ -11,8 +13,12 @@ import (
 
 func main() {
 	s := grpc.NewServer()
-	srv := &shorturl.GRPCServer{}
+	srv := &grpcserver.GRPCServer{}
 	api.RegisterShortlinkServer(s, srv)
+
+	url := shorten.Shorten()
+
+	fmt.Println(url)
 
 	l, err := net.Listen("tcp", ":8000")
 	if err != nil {
