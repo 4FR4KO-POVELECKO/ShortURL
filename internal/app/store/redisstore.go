@@ -7,45 +7,19 @@ import (
 )
 
 type redisStore struct {
-	host    string
-	db      int
-	expires time.Duration
+	client redis.Cmdable
 }
 
-func NewStoreRedis(host string, db int, expires time.Duration) Store {
-	return &redisStore{
-		host:    host,
-		db:      db,
-		expires: expires,
-	}
+func NewStoreRedis(client redis.Cmdable) Store {
+	return &redisStore{client: client}
 }
 
-func (r *redisStore) getClient() *redis.Client {
-	return redis.NewClient(&redis.Options{
-		Addr:     r.host,
-		Password: "",
-		DB:       r.db,
-	})
-}
-
-func (r *redisStore) Set(key string, value string) error {
-	client := r.getClient()
-
-	err := client.Set(key, value, r.expires*time.Second).Err()
-	if err != nil {
-		return err
-	}
-
-	return nil
+func (r *redisStore) Set(key string, value string, exp time.Duration) error {
+	return r.client.Set(key, value, exp).Err()
 }
 
 func (r *redisStore) Get(key string) (string, error) {
-	client := r.getClient()
+	result := r.client.Get(key)
 
-	val, err := client.Get(key).Result()
-	if err != nil {
-		return "", err
-	}
-
-	return val, nil
+	return result.Result()
 }

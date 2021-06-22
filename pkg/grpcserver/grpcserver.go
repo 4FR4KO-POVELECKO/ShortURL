@@ -31,7 +31,7 @@ func (s *GRPCServer) Create(ctx context.Context, req *api.OriginUrl) (*api.Short
 	}
 
 	// Сохраняем в бд
-	err = s.Store.Set(url.ShortURL, url.OriginURL)
+	err = s.Store.Set(url.ShortURL, url.OriginURL, 0)
 	if err != nil {
 		return nil, err
 	}

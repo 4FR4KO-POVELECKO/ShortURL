@@ -3,6 +3,7 @@ package shorten_test
 import (
 	"ShortURL/internal/app/model"
 	shorten "ShortURL/internal/app/utils"
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,10 +11,9 @@ import (
 
 func Test_Shorten(t *testing.T) {
 	short := shorten.Shorten()
+	url := model.URL{ShortURL: short}
 
-	url := model.TestURL(t)
-	url.ShortURL = short
-
-	err := url.ValidateURL()
+	err := url.ValidateShortURL()
 	assert.NoError(t, err)
+	assert.Equal(t, reflect.TypeOf("string"), reflect.TypeOf(short))
 }
