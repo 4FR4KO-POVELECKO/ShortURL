@@ -14,6 +14,6 @@ func Test_Shorten(t *testing.T) {
 	url := model.TestURL(t)
 	url.ShortURL = short
 
-	err := url.Validate()
+	err := url.ValidateURL()
 	assert.NoError(t, err)
 }

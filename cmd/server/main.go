@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ShortURL/internal/app/store"
 	"ShortURL/pkg/api"
 	"ShortURL/pkg/grpcserver"
 	"log"
@@ -10,8 +11,12 @@ import (
 )
 
 func main() {
+	db := store.NewStoreRedis("localhost:6379", 0, 10)
+
 	s := grpc.NewServer()
 	srv := &grpcserver.GRPCServer{}
+	srv.Store = db
+
 	api.RegisterShortlinkServer(s, srv)
 
 	l, err := net.Listen("tcp", ":8000")

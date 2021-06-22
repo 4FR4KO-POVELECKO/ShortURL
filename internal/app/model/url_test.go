@@ -89,7 +89,7 @@ func TestURL_Validate(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			err := tc.payload.Validate()
+			err := tc.payload.ValidateURL()
 			eq := false
 
 			if err != nil {
