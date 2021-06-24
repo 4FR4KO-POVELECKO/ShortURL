@@ -30,6 +30,8 @@ func (s *GRPCServer) Create(ctx context.Context, req *api.OriginUrl) (*api.Short
 		return nil, err
 	}
 
+	url.OriginURL = shorten.AddHTTP(url.OriginURL)
+
 	// Сохраняем в бд
 	err = s.Store.Set(url.ShortURL, url.OriginURL, 0)
 	if err != nil {
