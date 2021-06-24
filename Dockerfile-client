@@ -5,9 +5,9 @@ ENV GOPATH=/
 
 COPY ./ ./
 
-# build go server
+# build go client
 RUN go mod download
-RUN make
 
+RUN go build -o build -v ./cmd/client
 
-CMD ["./build/server"]
+CMD ["./build/client"]
