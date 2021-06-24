@@ -18,7 +18,6 @@ type server struct {
 
 func Start(addr string, client api.ShortlinkClient) error {
 	srv := newServer(client)
-	srv.configureRouter()
 
 	server := &http.Server{
 		Addr:    addr,
@@ -35,6 +34,8 @@ func newServer(client api.ShortlinkClient) *server {
 		router:     mux.NewRouter(),
 		grpcclient: client,
 	}
+
+	s.configureRouter()
 
 	return s
 }
@@ -80,7 +81,7 @@ func (s *server) handleCreate() http.HandlerFunc {
 
 		log.Println(short.Url)
 
-		s.respond(w, r, http.StatusOK, short.Url)
+		s.respond(w, r, http.StatusCreated, short.Url)
 	}
 }
 
