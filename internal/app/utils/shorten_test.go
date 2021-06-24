@@ -15,5 +15,7 @@ func Test_Shorten(t *testing.T) {
 
 	err := url.ValidateShortURL()
 	assert.NoError(t, err)
+
 	assert.Equal(t, reflect.TypeOf("string"), reflect.TypeOf(short))
+	assert.Equal(t, 10, len(short))
 }

@@ -6,10 +6,10 @@ import (
 )
 
 const (
-	upLetter  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	lowLetter = "abcdefghijklmnopqrstuvwxyz"
-	number    = "0123456789"
-	mark      = "_"
+	upLetter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	lowLetter  = "abcdefghijklmnopqrstuvwxyz"
+	number     = "0123456789"
+	underscore = "_"
 )
 
 func Shorten() string {
@@ -26,7 +26,7 @@ func Shorten() string {
 
 	for i := range b {
 		if i == markPos {
-			b[i] = mark[0]
+			b[i] = underscore[0]
 			continue
 		}
 
