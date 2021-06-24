@@ -4,6 +4,7 @@ import (
 	"ShortURL/pkg/api"
 	"context"
 	"encoding/json"
+	"html/template"
 	"log"
 	"net/http"
 
@@ -43,14 +44,19 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *server) configureRouter() {
-	s.router.HandleFunc("/home", s.handleHome()) //.Methods("GET")
+	s.router.HandleFunc("/", s.handleHome()).Methods("GET")
 	s.router.HandleFunc("/{token}", s.handleGet()).Methods("GET")
 	s.router.HandleFunc("/create", s.handleCreate()).Methods("POST")
 }
 
 func (s *server) handleHome() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		s.respond(w, r, http.StatusOK, "Home page")
+		tmpl, err := template.ParseFiles("web/template/index.html")
+		if err != nil {
+			s.error(w, r, http.StatusNotFound, err)
+		}
+
+		tmpl.Execute(w, nil)
 	}
 }
 
@@ -72,7 +78,16 @@ func (s *server) handleCreate() http.HandlerFunc {
 
 		short.Url = r.Host + "/" + short.Url
 
-		s.respond(w, r, http.StatusOK, short.Url)
+		log.Println(short.Url)
+
+		tmpl, err := template.ParseFiles("web/template/index.html")
+		if err != nil {
+			s.error(w, r, http.StatusNotFound, err)
+		}
+
+		tmpl.Execute(w, nil)
+
+		//s.respond(w, r, http.StatusOK, short.Url)
 	}
 }
 
