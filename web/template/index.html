@@ -31,21 +31,36 @@
         .url {
             position: relative;
         }
+
+        #shorturl::after {
+            content: attr(data-content);
+        }
     </style>
     <!-- JS -->
     <script>
         function short() {
             console.log("huy")
             var xhr = new XMLHttpRequest()
+
             var url = window.location.protocol + "/create"
             var token = document.getElementById("url").value
+            var shorturl = document.getElementById("shorturl")
 
             xhr.open("POST", url, true)
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-            var data = JSON.stringify({ "url": token})
-            xhr.send(data)
+            var data = JSON.stringify({"url": token})
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.response);
+                    // shorturl.setAttribute("href", xhr.response)
+                    var res = JSON.parse(xhr.response)
+                    shorturl.setAttribute('data-content', res)
+                    shorturl.setAttribute("href", "//" + res)
+                    return
+                }
+            }
 
-            location.href = url
+            xhr.send(data)
         }
     </script>
 </head>
@@ -62,7 +77,7 @@
                 </div>
             </div>
             <div class="url">
-                <a href="{{ .Short}}">{{ .Short}}</a>
+                <a id="shorturl" href="google.com"></a>
             </div>
         </div>
     </main>

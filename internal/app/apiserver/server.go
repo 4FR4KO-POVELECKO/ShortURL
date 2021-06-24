@@ -80,14 +80,7 @@ func (s *server) handleCreate() http.HandlerFunc {
 
 		log.Println(short.Url)
 
-		tmpl, err := template.ParseFiles("web/template/index.html")
-		if err != nil {
-			s.error(w, r, http.StatusNotFound, err)
-		}
-
-		tmpl.Execute(w, nil)
-
-		//s.respond(w, r, http.StatusOK, short.Url)
+		s.respond(w, r, http.StatusOK, short.Url)
 	}
 }
 
