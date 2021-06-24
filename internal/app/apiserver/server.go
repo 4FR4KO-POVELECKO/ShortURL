@@ -50,6 +50,7 @@ func (s *server) configureRouter() {
 	s.router.HandleFunc("/create", s.handleCreate()).Methods("POST")
 }
 
+// handleHome возвращает html страницу
 func (s *server) handleHome() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		tmpl, err := template.ParseFiles("web/template/index.html")
@@ -62,6 +63,9 @@ func (s *server) handleHome() http.HandlerFunc {
 	}
 }
 
+// handleCreate принимает POST запрос
+// JSON "url": "example.com"
+// Возвращает сокращенную сылку
 func (s *server) handleCreate() http.HandlerFunc {
 	type request struct {
 		OriginURL string `json:"url"`
@@ -88,6 +92,8 @@ func (s *server) handleCreate() http.HandlerFunc {
 	}
 }
 
+// handleGet принимает в параметре токен сокращенной ссылки
+// Переадресовывает на оригинальую ссылку
 func (s *server) handleGet() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		keys := mux.Vars(r)
