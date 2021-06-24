@@ -44,7 +44,7 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (s *server) configureRouter() {
 	s.router.HandleFunc("/home", s.handleHome()) //.Methods("GET")
-	s.router.HandleFunc("/get/{token}", s.handleGet()).Methods("GET")
+	s.router.HandleFunc("/{token}", s.handleGet()).Methods("GET")
 	s.router.HandleFunc("/create", s.handleCreate()).Methods("POST")
 }
 
@@ -69,6 +69,8 @@ func (s *server) handleCreate() http.HandlerFunc {
 		if err != nil {
 			s.error(w, r, http.StatusInternalServerError, err)
 		}
+
+		short.Url = r.Host + "/" + short.Url
 
 		s.respond(w, r, http.StatusOK, short.Url)
 	}
