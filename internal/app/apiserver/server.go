@@ -55,6 +55,7 @@ func (s *server) handleHome() http.HandlerFunc {
 		tmpl, err := template.ParseFiles("web/template/index.html")
 		if err != nil {
 			s.error(w, r, http.StatusNotFound, err)
+			return
 		}
 
 		tmpl.Execute(w, nil)
@@ -69,12 +70,14 @@ func (s *server) handleCreate() http.HandlerFunc {
 		req := &request{}
 		if err := json.NewDecoder(r.Body).Decode(req); err != nil {
 			s.error(w, r, http.StatusBadRequest, err)
+			return
 		}
 
 		url := req.OriginURL
 		short, err := s.grpcclient.Create(context.Background(), &api.OriginUrl{Url: url})
 		if err != nil {
 			s.error(w, r, http.StatusInternalServerError, err)
+			return
 		}
 
 		short.Url = r.Host + "/" + short.Url
@@ -93,6 +96,7 @@ func (s *server) handleGet() http.HandlerFunc {
 		url, err := s.grpcclient.Get(context.Background(), &api.ShortUrl{Url: short})
 		if err != nil {
 			s.error(w, r, http.StatusNotFound, err)
+			return
 		}
 
 		http.Redirect(w, r, url.Url, http.StatusSeeOther)

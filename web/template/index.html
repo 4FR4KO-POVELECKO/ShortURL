@@ -39,7 +39,6 @@
     <!-- JS -->
     <script>
         function short() {
-            console.log("huy")
             var xhr = new XMLHttpRequest()
 
             var url = window.location.protocol + "/create"
@@ -50,12 +49,18 @@
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
             var data = JSON.stringify({"url": token})
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    console.log(xhr.response);
-                    // shorturl.setAttribute("href", xhr.response)
-                    var res = JSON.parse(xhr.response)
+                if (xhr.readyState === 4 && xhr.status == 201) {
+                    try {
+                        var res = JSON.parse(xhr.response)
+                    } catch(e) {
+                        shorturl.setAttribute('data-content', "Invalid URL. Try again!")
+                        return
+                    }
                     shorturl.setAttribute('data-content', res)
                     shorturl.setAttribute("href", "//" + res)
+                    return
+                } else {
+                    shorturl.setAttribute('data-content', "Invalid URL. Try again!")
                     return
                 }
             }
@@ -77,7 +82,7 @@
                 </div>
             </div>
             <div class="url">
-                <a id="shorturl" href="google.com"></a>
+                <a id="shorturl" href=""></a>
             </div>
         </div>
     </main>

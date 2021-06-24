@@ -1,16 +1,12 @@
-package apiserver
+package grpcserver_test
 
 import (
 	"ShortURL/internal/app/store"
 	"ShortURL/pkg/api"
 	"ShortURL/pkg/grpcserver"
-	"bytes"
 	"context"
-	"encoding/json"
 	"log"
 	"net"
-	"net/http"
-	"net/http/httptest"
 	"testing"
 
 	"github.com/alicebob/miniredis"
@@ -48,7 +44,24 @@ func getConn() func(context.Context, string) (net.Conn, error) {
 	}
 }
 
-func TestServer_HandleCreate(t *testing.T) {
+func TestShortlinkServer_Create(t *testing.T) {
+	testCases := []struct {
+		name    string
+		payload *api.OriginUrl
+		err     bool
+	}{
+		{
+			name:    "valid",
+			payload: &api.OriginUrl{Url: "google.com"},
+			err:     false,
+		},
+		{
+			name:    "invalid",
+			payload: &api.OriginUrl{Url: "googlecom"},
+			err:     true,
+		},
+	}
+
 	ctx := context.Background()
 
 	conn, err := grpc.DialContext(ctx, "", grpc.WithInsecure(), grpc.WithContextDialer(getConn()))
@@ -57,48 +70,25 @@ func TestServer_HandleCreate(t *testing.T) {
 	}
 	defer conn.Close()
 
-	c := api.NewShortlinkClient(conn)
-	s := newServer(c)
-
-	testCases := []struct {
-		name         string
-		payload      interface{}
-		expectedCode int
-	}{
-		{
-			name: "valid",
-			payload: map[string]interface{}{
-				"url": "google.com",
-			},
-			expectedCode: http.StatusCreated,
-		},
-		{
-			name:         "invalid payload",
-			payload:      "invalid",
-			expectedCode: http.StatusBadRequest,
-		},
-		{
-			name: "invalid url",
-			payload: map[string]interface{}{
-				"url": "googlecom",
-			},
-			expectedCode: http.StatusInternalServerError,
-		},
-	}
+	client := api.NewShortlinkClient(conn)
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			b := &bytes.Buffer{}
-			json.NewEncoder(b).Encode(tc.payload)
-			rec := httptest.NewRecorder()
-			req, _ := http.NewRequest(http.MethodPost, "/create", b)
-			s.ServeHTTP(rec, req)
-			assert.Equal(t, tc.expectedCode, rec.Code)
+			payload := tc.payload
+
+			_, err := client.Create(ctx, payload)
+			eq := false
+
+			if err != nil {
+				eq = assert.Error(t, err)
+			}
+
+			assert.Equal(t, tc.err, eq)
 		})
 	}
 }
 
-func TestServer_HandleGet(t *testing.T) {
+func TestShortlinkServer_Get(t *testing.T) {
 	ctx := context.Background()
 
 	conn, err := grpc.DialContext(ctx, "", grpc.WithInsecure(), grpc.WithContextDialer(getConn()))
@@ -107,17 +97,11 @@ func TestServer_HandleGet(t *testing.T) {
 	}
 	defer conn.Close()
 
-	c := api.NewShortlinkClient(conn)
-	s := newServer(c)
+	client := api.NewShortlinkClient(conn)
 
-	b := &bytes.Buffer{}
-	payload := map[string]interface{}{
-		"url": "google.com",
-	}
+	short, _ := client.Create(ctx, &api.OriginUrl{Url: "google.com"})
+	origin, err := client.Get(ctx, short)
+	assert.NoError(t, err)
+	assert.Equal(t, "https://google.com", origin.Url)
 
-	json.NewEncoder(b).Encode(payload)
-	rec := httptest.NewRecorder()
-	req, _ := http.NewRequest(http.MethodGet, "/XXXaaa123_", nil)
-	s.ServeHTTP(rec, req)
-	assert.Equal(t, http.StatusNotFound, rec.Code)
 }
