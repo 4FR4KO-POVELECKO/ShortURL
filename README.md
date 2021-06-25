@@ -2,8 +2,17 @@
 _API Сервис по сокращению ссылок._
 
 ### DockerHub:
+- Server 
+
+```bash
 docker run -p 5000:5000 timhuk/shorturl_server:latest
-docker run -p 8000:8000 timhuk/shorturl_client:latest
+```
+
+- Client
+
+```bash
+- docker run -p 8000:8000 timhuk/shorturl_client:latest
+```
 
 ## Installation
 
