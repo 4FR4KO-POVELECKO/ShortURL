@@ -3,11 +3,10 @@ FROM golang:latest
 RUN go version
 ENV GOPATH=/
 
-COPY ./ ./
-
-# build go client
+COPY go.mod ./
 RUN go mod download
 
-RUN go build -o build -v ./cmd/client
+COPY ./ ./
+RUN go build -v ./cmd/client
 
-CMD ["./build/client"]
+CMD ["./client"]

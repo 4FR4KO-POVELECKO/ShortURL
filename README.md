@@ -1,6 +1,20 @@
 # Shortener
 _API Сервис по сокращению ссылок._
-Сервис хостится на Heroku: [ссылка]()
+
+### DockerHub:
+docker run -p 5000:5000 timhuk/shorturl_server:latest
+docker run -p 8000:8000 timhuk/shorturl_client:latest
+
+## Installation
+
+```bash
+git clone https://github.com/4FR4KO-POVELECKO/ShortURL.git
+
+cd ShortURL
+
+docker-compose-up
+```
+
 
 ## Сервер:
 **gRPC** сервер написан на Go, proto3.
