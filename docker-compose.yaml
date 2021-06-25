@@ -4,16 +4,16 @@ services:
     server:
         container_name: server
         build: ./
-        context: .
+        context: ./docker/server
          dockerfile: ./Dockerfile
         ports:
             - 5000:5000
         env_file:
             - ./.env.dev
     client:
-        container_name: server
+        container_name: client
         build: ./
-        context: .
+        context: ./docker/client
          dockerfile: ./Dockerfile-client
         ports:
             - 8000:8000

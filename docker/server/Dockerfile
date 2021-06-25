@@ -7,7 +7,7 @@ COPY ./ ./
 
 # build go server
 RUN go mod download
-RUN make
+RUN go build -o build -v ./cmd/server
 
 
 CMD ["./build/server"]
