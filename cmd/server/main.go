@@ -33,7 +33,11 @@ func main() {
 	}
 
 	// Connect Redis
-	client := redis.NewClient(&redis.Options{Addr: ":" + redisPort, Password: "", DB: 0})
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:" + redisPort,
+		Password: "",
+		DB:       0,
+	})
 	_, err := client.Ping().Result()
 	if err != nil {
 		log.Fatal(err)

@@ -1,31 +1,17 @@
-# Shortener
-_API Сервис по сокращению ссылок._
+# ShortURL
 
-### DockerHub:
-- Server 
+##### API Сервис по сокращению ссылок
 
-```bash
-docker run -p 5000:5000 timhuk/shorturl_server:latest
-```
-
-- Client
-
-```bash
-- docker run -p 8000:8000 timhuk/shorturl_client:latest
-```
-
-## Installation
-
+### Installation
 ```bash
 git clone https://github.com/4FR4KO-POVELECKO/ShortURL.git
-
-cd ShortURL
-
-docker-compose-up
+cd ./ShortURL
+docker-compose up
 ```
+or 
 
 
-## Сервер:
+### Сервер
 **gRPC** сервер написан на Go, proto3.
 
 **Метов Create:** 
@@ -34,30 +20,22 @@ docker-compose-up
 **Метов Get:**
 Принимает токен, валидирует, проверяет в Redis, возвращает оригинальную ссылку. Если токен не найден возвращает ошибку.
 
-## Клиент:
-Клиент API сервер написан на Go.
-
-**/Create:**
-Примает POST запрос, отправляет запрос gRPC сервер, возвращает сокрашенную ссылку.
-
-**/{token}:**
-GET запрос, cокращенная ссылка отправляте запрос на gRPC сервер, переадресовывает на оригинальную ссылку.
-
-## Tech
+### Tech
 - Golang
 - gRPC
 - proto3
 - Redis
 - Docker
 
-## Структура проэкта
+### Структура проекта
 - **api**: файлы proto
 - **cmd**: main файлы 
-- **internal**: клиент, бд, модели
+- **internal**: бд, модели
 - **pkg**: grpc сервер
 - **web**: html
 
-## License
+
+### License
 
 MIT
 
@@ -85,3 +63,4 @@ MIT
    [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
    [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
    [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+   
