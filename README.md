@@ -8,7 +8,6 @@ git clone https://github.com/4FR4KO-POVELECKO/ShortURL.git
 cd ./ShortURL
 docker-compose up
 ```
-or 
 
 
 ### Сервер
