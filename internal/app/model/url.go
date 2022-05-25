@@ -1,8 +1,6 @@
 package model
 
 import (
-	"regexp"
-
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 )
