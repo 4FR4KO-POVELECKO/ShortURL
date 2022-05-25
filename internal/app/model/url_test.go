@@ -53,38 +53,6 @@ func TestURL_ValidateURL(t *testing.T) {
 			},
 			err: true,
 		},
-		{
-			name: "short url without numbers",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZabcdef_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without upper letters",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "abcdef123_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without lower letters",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZABC123_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without underscore",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZabc1234",
-			},
-			err: true,
-		},
 	}
 
 	for _, tc := range testCases {
@@ -177,38 +145,6 @@ func TestURL_ValidateShortURL(t *testing.T) {
 			payload: &model.URL{
 				OriginURL: "google.com",
 				ShortURL:  "XYZabc1234_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without numbers",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZabcdef_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without upper letters",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "abcdef123_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without lower letters",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZABC123_",
-			},
-			err: true,
-		},
-		{
-			name: "short url without underscore",
-			payload: &model.URL{
-				OriginURL: "google.com",
-				ShortURL:  "XYZabc1234",
 			},
 			err: true,
 		},
