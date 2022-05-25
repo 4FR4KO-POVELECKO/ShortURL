@@ -1,9 +1,7 @@
 package shorten
 
 import (
-	"fmt"
 	"math/rand"
-	"time"
 )
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
