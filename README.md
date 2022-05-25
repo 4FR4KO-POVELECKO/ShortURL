@@ -1,37 +1,22 @@
 # Shorty
 
-##### API Сервис по сокращению ссылок
+API Сервис по сокращению ссылок
 
-### Installation
+
+## Build
+
+Создать конфиг `.env` по шаблону `.env.example`
+
+Сборка докер контенеров
 ```bash
-git clone https://github.com/4FR4KO-POVELECKO/ShortURL.git
-cd ./ShortURL
+docker-compose build
 docker-compose up
 ```
 
-
-### Сервер
-**gRPC** сервер написан на Go, proto3.
-
-**Метов Create:** 
-Примает ссылку, валидирует, генерирует токен формата [a-zA-Z0-9_], сохраняет в Redis, возвращает токен. Если ссылка не прошла валидацию возвращает ошибку. 
-
-**Метов Get:**
-Принимает токен, валидирует, проверяет в Redis, возвращает оригинальную ссылку. Если токен не найден возвращает ошибку.
-
-### Tech
-- Golang
-- gRPC
-- proto3
-- Redis
-- Docker
-
-### Структура проекта
-- **api**: файлы proto
-- **cmd**: main файлы 
-- **internal**: бд, модели
-- **pkg**: grpc сервер
-- **web**: html
+Проверить что контейнеры запустились
+```bash
+docker ps
+```
 
 
 ### License
