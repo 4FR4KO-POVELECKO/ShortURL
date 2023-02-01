@@ -5,8 +5,8 @@ services:
     build: ./
     command: ./server
     ports:
-      - 5000:5000
-    depends_on: 
+      - 5001:5000
+    depends_on:
       - redis
     env_file: 
       - .env

@@ -22,6 +22,11 @@ func init() {
 
 func main() {
 	// Get env
+	redis_host, exists := os.LookupEnv("REDIS_HOST")
+	if !exists {
+		redis_host = "127.0.0.1"
+	}
+
 	redisPort, exists := os.LookupEnv("REDIS_PORT")
 	if !exists {
 		redisPort = "6379"
@@ -34,7 +39,7 @@ func main() {
 
 	// Connect Redis
 	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:" + redisPort,
+		Addr:     redis_host + ":" + redisPort,
 		Password: "",
 		DB:       0,
 	})

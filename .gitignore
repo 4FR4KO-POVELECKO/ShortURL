@@ -16,3 +16,7 @@
 # vendor/
 
 .env
+Makefile
+
+
+.DS_Store
