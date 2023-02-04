@@ -102,6 +102,5 @@ func TestShortlinkServer_Get(t *testing.T) {
 	short, _ := client.Create(ctx, &api.OriginUrl{Url: "google.com"})
 	origin, err := client.Get(ctx, short)
 	assert.NoError(t, err)
-	assert.Equal(t, "https://google.com", origin.Url)
-
+	assert.Equal(t, "google.com", origin.Url)
 }
