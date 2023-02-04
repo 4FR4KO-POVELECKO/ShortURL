@@ -1,7 +1,7 @@
 FROM golang:latest
+ENV GOPATH=/
 
 RUN go version
-ENV GOPATH=/
 
 COPY ./ ./
 

@@ -23,3 +23,8 @@ func (r *redisStore) Get(key string) (string, error) {
 
 	return result.Result()
 }
+
+func (r *redisStore) Incr(key string) (int64, error) {
+	result := r.client.Incr(key)
+	return result.Result()
+}

@@ -2,16 +2,17 @@ version: '3.8'
 
 services:
   server:
+    container_name: shorty_grpc
     build: ./
-    command: ./server
     ports:
       - 5001:5000
     depends_on:
       - redis
-    env_file: 
+    env_file:
       - .env
 
   redis:
+    container_name: shorty_redis
     restart: always
     image: redis:alpine
     ports:

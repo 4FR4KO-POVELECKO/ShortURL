@@ -30,7 +30,7 @@ func (s *GRPCServer) Create(ctx context.Context, req *api.OriginUrl) (*api.Short
 		return nil, err
 	}
 
-	url.OriginURL = shorten.AddHTTP(url.OriginURL)
+	// url.OriginURL = shorten.AddHTTP(url.OriginURL)
 
 	// Сохраняем в бд
 	err = s.Store.Set(url.ShortURL, url.OriginURL, 0)
@@ -49,6 +49,12 @@ func (s *GRPCServer) Get(ctx context.Context, req *api.ShortUrl) (*api.OriginUrl
 	}
 
 	err := url.ValidateShortURL()
+	if err != nil {
+		return nil, err
+	}
+
+	// Записываем получение ссылки для статы
+	_, err = s.Store.Incr("stat_" + url.ShortURL)
 	if err != nil {
 		return nil, err
 	}
